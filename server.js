@@ -83,17 +83,17 @@ app.get("/saved", function(req, res) {
 // A GET request to scrape the website
 app.get("/scrape", function(req, res) {
   
-  axios.get("https://www.dallasnews.com").then(function(response) {
+  axios.get("https://www.nytimes.com").then(function(response) {
    
     var $ = cheerio.load(response.data);
     // Grab all h2 within an article tag
-    $(".app_header_headline").each(function (i, element) {
+    $("article").each(function (i, element) {
      
       var result = {};
       console.log(result)
       // Add the title and summary of every link, and save them as properties of the result object
       result.title = $(this)
-        .find(".secStoryHed")
+        .find("a")
         .text();
         console.log("this is title: " + result.title)
       result.summary = $(this)
