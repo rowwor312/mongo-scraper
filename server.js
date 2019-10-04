@@ -44,17 +44,8 @@ var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines
 mongoose.Promise = Promise;
 mongoose.connect(MONGODB_URI);
 
-//mongoose.connect("mongodb://localhost/mongoscraper");
-// var db = mongoose.connection;
 
-// db.on("error", function(error) {
-//   console.log("Mongoose Error: ", error);
-// });
 
-// // Once logged in to the db through mongoose, log a success message
-// db.once("open", function() {
-//   console.log("Mongoose connection successful.");
-// });
 // Routes
 // ======
 
@@ -83,7 +74,7 @@ app.get("/saved", function(req, res) {
 // A GET request to scrape the website
 app.get("/scrape", function(req, res) {
   
-  axios.get("https://www.nytimes.com").then(function(response) {
+  axios.get("https://www.vox.com").then(function(response) {
    
     var $ = cheerio.load(response.data);
     // Grab all h2 within an article tag
@@ -188,10 +179,10 @@ app.post("/articles/delete/:id", function(req, res) {
 // Create a new note
 app.post("/notes/save/:id", function(req, res) {
   // Create a new note and pass the req.body to the entry
-  // var newNote = new Note({
-  //   body: req.body.text,
-  //   article: req.params.id
-  // });
+  var newNote = new Note({
+    body: req.body.text,
+    article: req.params.id
+  });
   console.log(req.body)
   // And save the new note the db
   Note.create(req.body)
